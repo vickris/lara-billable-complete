@@ -19,7 +19,7 @@ class SubscriptionController extends Controller
       $plan = Plan::findOrFail($request->plan);
 
       if ($request->user()->subscribedToPlan($plan->braintree_plan, 'main')) {
-            return redirect('home');
+            return redirect('home')->with('error', 'Unauthorised operation');
       }
 
       if (!$request->user()->subscribed('main')) {
@@ -28,7 +28,7 @@ class SubscriptionController extends Controller
             $request->user()->subscription('main')->swap($plan->braintree_plan);
         }
 
-        return redirect('home');
+        return redirect('home')->with('success', 'Subscribed to '.$plan->name.' successfully');
 
     }
 
@@ -36,13 +36,13 @@ class SubscriptionController extends Controller
     {
       $request->user()->subscription('main')->cancel();
 
-      return redirect()->back();
+      return redirect()->back()->with('success', 'You have successfully cancelled your subscription');
     }
 
     public function resume(Request $request)
     {
       $request->user()->subscription('main')->resume();
 
-      return redirect()->back();
+      return redirect()->back()->with('success', 'You have successfully resumed your subscription');
     }
 }

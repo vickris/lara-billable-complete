@@ -40,9 +40,7 @@
                     </a>
                 </div>
                 <ul class="nav navbar-nav navbar-left">
-                    @if (Auth::check() && !Auth::user()->subscribed('main'))
-                        <li><a href="{{ url('/plans') }}">Plans</a></li>
-                    @endif
+                    <li><a href="{{ url('/plans') }}">Plans</a></li>
                     <li><a href="{{ url('/lessons') }}">Lessons</a></li>
                     <li><a href="{{ url('/prolessons') }}">Pro Lessons</a></li>
                 </ul>
@@ -67,17 +65,18 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
+                                        @if (Auth::user()->subscribed('main'))
+                                            <a href="{{ url('/subscriptions') }}">
+                                                Manage subscriptions
+                                            </a>
+                                        @endif
+                                    </li>
+                                    <li>
                                         <a href="{{ url('/logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                             Logout
                                         </a>
-                                        @if (Auth::user()->subscribed('main'))
-                                        <a href="{{ url('/subscriptions') }}">
-                                            Manage subscriptions
-                                        </a>
-                                        @endif
-
                                         <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
@@ -89,7 +88,13 @@
                 </div>
             </div>
         </nav>
-
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    @include ('layouts.partials._notifications')
+                </div>
+            </div>
+        </div>
         @yield('content')
     </div>
 

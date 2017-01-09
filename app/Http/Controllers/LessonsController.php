@@ -8,11 +8,11 @@ class LessonsController extends Controller
 {
     public function index()
     {
-      # code...
+      return "Normal Lessons";
     }
 
     public function premium()
     {
-      # code...
+      return "Premium Lessons";
     }
 }

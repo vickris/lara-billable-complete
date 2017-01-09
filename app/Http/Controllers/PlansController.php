@@ -15,7 +15,7 @@ class PlansController extends Controller
     public function show(Request $request, Plan $plan)
     {
         if ($request->user()->subscribedToPlan($plan->braintree_plan, 'main')) {
-            return redirect('home');
+            return redirect('home')->with('error', 'Unauthorised operation');
       }
 
       return view('plans.show')->with(['plan' => $plan]);
