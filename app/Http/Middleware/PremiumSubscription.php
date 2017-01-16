@@ -18,9 +18,10 @@ class PremiumSubscription
         if (!$request->user()->subscribed('premium', 'main')) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
-            } else {
-                return redirect('/plans');
             }
+
+            return redirect('/plans');
+
         }
 
         return $next($request);

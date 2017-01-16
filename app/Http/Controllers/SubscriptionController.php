@@ -28,7 +28,7 @@ class SubscriptionController extends Controller
             $request->user()->subscription('main')->swap($plan->braintree_plan);
         }
 
-        return redirect('home')->with('success', 'Subscribed to '.$plan->name.' successfully');
+        return redirect('home')->with('success', 'Subscribed to '.$plan->braintree_plan.' successfully');
 
     }
 
