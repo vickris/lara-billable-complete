@@ -17,15 +17,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/home', 'HomeController@index');
+
+Route::get('/plans', 'PlansController@index');
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/home', 'HomeController@index');
 
-    Route::get('/plans', 'PlansController@index');
     Route::get('/plan/{plan}', 'PlansController@show');
-
     Route::get('/braintree/token', 'BraintreeTokenController@token');
-
     Route::post('/subscribe', 'SubscriptionController@create');
 
     Route::group(['middleware' => 'subscribed'], function () {
